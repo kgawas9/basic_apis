@@ -4,9 +4,9 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .serializers import StudentSerializer
+from .serializers import StudentSerializer, CategorySerializer, BookSerializer
 
-from .models import Student
+from .models import Student, Book, Category
 # Create your views here.
 
 @api_view(['GET'])
@@ -115,4 +115,15 @@ def delete_student_data(request, id):
         return Response({
             'status': 403,
             'message': 'Unable to delete record ' + str(e)
+        })
+    
+
+@api_view(['GET'])
+def get_books(request):
+    book_obj = Book.objects.all()
+    serializer = BookSerializer(book_obj, many=True)
+
+    return Response({
+            'status': 200,
+            'payload': serializer.data
         })

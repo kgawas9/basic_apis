@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Student
+from .models import Student, Category, Book
 
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -8,8 +8,6 @@ class StudentSerializer(serializers.ModelSerializer):
         fields = [
             'name', 'age', 'father_name'
         ]
-        # exlcude = ['']
-        # fields = '__all__'
 
     def validate(self, data):
         if data['age'] < 18:
@@ -29,3 +27,21 @@ class StudentSerializer(serializers.ModelSerializer):
             })
         
         return data
+    
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = [
+            'id', 'category_name'
+        ]
+
+
+class BookSerializer(serializers.ModelSerializer):
+    category = CategorySerializer()
+    class Meta:
+        model = Book
+        fields = [
+            'id', 'book_title', 'category'
+        ]
+        # depth = 1
