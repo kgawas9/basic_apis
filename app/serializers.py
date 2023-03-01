@@ -6,7 +6,7 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = [
-            'name', 'age', 'father_name'
+            'id', 'name', 'age', 'father_name'
         ]
 
     def validate(self, data):
